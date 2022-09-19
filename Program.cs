@@ -1,56 +1,14 @@
 ﻿
 string[] inputArray = { "hello", "2", "world", ":-)" };
-
-System.Console.WriteLine("Нажмите 'y' если хотите ввести строки вручную.");
+Console.WriteLine("Нажмите 'y' если хотите ввести строки вручную.");
 ConsoleKeyInfo pressed;
 pressed = Console.ReadKey(true);
 if (pressed.KeyChar == 'y')
 {
-    int inputArrayLength = Prompt("Введите размер массива: ");
-    inputArray = new string[inputArrayLength];
-
-    for (int i = 0; i < inputArrayLength; i++)
-    {
-        Console.Write($"Введите {i}ую строку: ");
-        inputArray[i] = Console.ReadLine();
-    }
+    inputArray = GetArrayFromConsole(Prompt("Введите размер массива: "));
 }
-
-System.Console.WriteLine("Массив из строк, длина которых меньше 3 символов: ");
-foreach (var item in GetLessThanThreeArray(inputArray))
-{
-    System.Console.Write($"{item} ");
-}
-
-string[] GetLessThanThreeArray(string[] inputArray)
-{
-    int inputArrayLength = inputArray.Length;
-    int[] indexesArray = new int[inputArrayLength];
-    int count = 0;
-
-    for (int i = 0; i < inputArrayLength; i++)
-    {
-        if (inputArray[i].Length < 4)
-        {
-            count++;
-            indexesArray[i] = 1;
-        }
-    }
-
-    string[] lessThanThreeArray = new string[count];
-    int j = 0;
-
-    for (int i = 0; i < inputArrayLength; i++)
-    {
-        if (indexesArray[i] > 0)
-        {
-            lessThanThreeArray[j] = inputArray[i];
-            j++;
-        }
-    }
-
-    return lessThanThreeArray;
-}
+Console.WriteLine("Массив из строк, длина которых меньше 3 символов: ");
+ShowArray(GetLessThanThreeSymbolArray(inputArray));
 
 int Prompt(string message)
 {
@@ -62,4 +20,53 @@ int Prompt(string message)
         System.Console.Write(message);
     }
     return number;
+}
+
+void ShowArray(string[] array)
+{
+    foreach (var item in array)
+    {
+        Console.Write($"{item} ");
+    }
+}
+
+string[] GetArrayFromConsole(int arrayLength)
+{
+    string[] inputArray = new string[arrayLength];
+
+    for (int i = 0; i < arrayLength; i++)
+    {
+        Console.Write($"Введите {i}ую строку: ");
+        inputArray[i] = Console.ReadLine();
+    }
+
+    return inputArray;
+}
+
+string[] GetLessThanThreeSymbolArray(string[] inputArray)
+{
+    int inputArrayLength = inputArray.Length;
+    int count = 0;
+
+    for (int i = 0; i < inputArrayLength; i++)
+    {
+        if (inputArray[i].Length <= 3)
+        {
+            count++;
+        }
+    }
+
+    string[] lessThanThreeArray = new string[count];
+    int j = 0;
+
+    for (int i = 0; i < inputArrayLength; i++)
+    {
+        if (inputArray[i].Length <= 3)
+        {
+            lessThanThreeArray[j] = inputArray[i];
+            j++;
+        }
+    }
+
+    return lessThanThreeArray;
 }
